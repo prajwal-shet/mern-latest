@@ -7,12 +7,14 @@ const userRoutes = require('./routes/user')
 const cors=require('cors')
 // express app
 const app = express()
-const corsOptions = {
-  origin: 'http://localhost:3000', // Replace with your frontend URL
-  methods: ['GET', 'POST', 'PATCH', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-};
-app.use(cors(corsOptions));
+app.use(cors({
+  origin: [process.env.FRONTEND_URL], //allow request only from these site
+  methods: ["GET","POST","PATCH","DELETE"],
+  credentials: true, //for getting cookies and other headers from backend
+  samesite : "none",
+  secure: true,
+}))
+
 // middleware
 app.use(express.json())
 
